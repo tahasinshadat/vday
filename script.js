@@ -312,3 +312,12 @@ $('.floating-image').each(function() {
     myGarden.render();
   }, FlowerGarden.options.growSpeed);
 });
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const audio = document.getElementById('bg-music');
+    audio.play().catch(err => {
+      console.log("Autoplay was blocked:", err);
+    });
+  }, 10);
+});
