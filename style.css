@@ -1,0 +1,109 @@
+/* Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+  background: #fceef5;  /* Light purple background */
+  font-family: 'Georgia', serif;
+  color: #333;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Heart Animation Container */
+#loveHeart {
+  width: 670px;
+  height: 625px;
+  margin: 20px auto;
+  position: relative;
+}
+
+#flowerCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Counter in heart: no box, just nicer font, centered text */
+#timer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #333;
+  font-size: 28px;
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* Letter Container with Fade-In Effect */
+#letterContainer {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 10;
+  clip-path: inset(0 0 100% 0);
+  animation: revealLetter 6s forwards;
+  animation-delay: 1s;
+}
+
+@keyframes revealLetter {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+#letterContainer p {
+  line-height: 1.6;
+  margin-bottom: 1em;
+}
+
+.signature {
+  text-align: right;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+/* Floating Images */
+.floating-image {
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+  display: block;
+}
+
+/* Larger sizes */
+.floating-image.small {
+  width: 120px;
+}
+
+.floating-image.medium {
+  width: 180px;
+}
+
+.floating-image.large {
+  width: 240px;
+}
+
+/* Circular crop */
+.floating-image.circle {
+  border-radius: 50%;
+}
+
+/* Subtle Pulse Animation */
+@keyframes floatPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.floating-image {
+  animation: floatPulse 8s ease-in-out infinite;
+}

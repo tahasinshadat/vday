@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>For My Love</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- jQuery (required for our JS effects) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <!-- Background Music -->
+  <audio id="bg-music" autoplay loop>
+    <source src="Tahasin-Blue-Piano.mp3" type="audio/mpeg">
+    Your browser does not support audio.
+  </audio>
+  
+  <!-- Heart Animation Container -->
+  <div id="loveHeart">
+    <canvas id="flowerCanvas"></canvas>
+    <!-- Live counter in center of heart -->
+    <div id="timer"></div>
+  </div>
+  
+  <!-- Letter Container (fades in from top to bottom) -->
+  <div id="letterContainer">
+    <p>My love for you is akin to the expansion of the universe, never ending and exploitatively infinite. You are the color that brings volume to life, and the meaning behind every movement that I do and every thought that I think.</p>
+    <p>Your beauty makes my heart ring and your voice makes my mind calmer. My love for you doesn’t only exist in this lifetime, as it was present from the moment Allah SWT shaped me from the mud. My love for you extends beyond lifetimes and eternities, and us ever present to all.</p>
+    <p>Your presence takes away all worries from my mind, and your touch cures all illness from my body. I loved you since before I knew you, and your love is the one thing I never knew I couldn’t go without until I received it.</p>
+    <p>My eyes are valuable not because of who they reside in, but because of what they reflect. They have the honor of holding the reflecting of the most beautiful and loving person known. You are akin to the fruits of Heaven, which when enjoyed in this duniya make everything else dull and unenjoyable.</p>
+    <p>There is no going back, and no moving forward, without your presence. I am always yours, in the life before, now, and after. And I irrefutably hold the greatest honor to tell you that I’ll seek you out to take you for myself in every life time I live and every place I go. I am yours forever, and you are mine.</p>
+    <p class="signature">- Your love forever, Tahasin</p>
+  </div>
+  
+  <!-- Floating Images -->
+  <img class="floating-image small circle" data-index="0" style="top: 5%; left: 5%;">
+  <img class="floating-image medium" data-index="1" style="top: 15%; right: 5%;">
+  <img class="floating-image large circle" data-index="2" style="bottom: 6%; left: 3%;">
+  <img class="floating-image small" data-index="3" style="bottom: 5%; right: 10%;">
+  <img class="floating-image medium circle" data-index="4" style="top: 40%; left: 0%;">
+  <img class="floating-image large" data-index="5" style="top: 50%; right: 4%;">
+  
+  <script src="script.js"></script>
+</body>
+</html>
