@@ -1,12 +1,9 @@
-/****************************************************
- * 1) DEFINE CONSTRUCTOR FUNCTIONS (FlowerGarden, etc.)
- ****************************************************/
-
 // Vector for Petals
 function Vector(x, y) {
   this.x = x;
   this.y = y;
 }
+
 Vector.prototype = {
   rotate: function(theta) {
     var x = this.x, y = this.y;
@@ -35,6 +32,7 @@ function Petal(stretchA, stretchB, startAngle, angle, growFactor, bloom) {
   this.r = 1;
   this.isfinished = false;
 }
+
 Petal.prototype.draw = function() {
   var ctx = this.bloom.garden.ctx;
   ctx.lineWidth = 2;
@@ -50,6 +48,7 @@ Petal.prototype.draw = function() {
   ctx.bezierCurveTo(v3.x, v3.y, v4.x, v4.y, v2.x, v2.y);
   ctx.stroke();
 };
+
 Petal.prototype.render = function() {
   if (this.r <= this.bloom.r) {
     this.r += this.growFactor;
@@ -70,6 +69,7 @@ function Bloom(p, r, c, pc, garden) {
   this.init();
   this.garden.addBloom(this);
 }
+
 Bloom.prototype.init = function() {
   var angle = 360 / this.pc;
   var startAngle = randomInt(0, 90);
@@ -84,6 +84,7 @@ Bloom.prototype.init = function() {
     ));
   }
 };
+
 Bloom.prototype.draw = function() {
   var finished = true;
   this.garden.ctx.save();
@@ -104,6 +105,7 @@ function FlowerGarden(ctx, element) {
   this.ctx = ctx;
   this.element = element;
 }
+
 FlowerGarden.prototype = {
   render: function() {
     for (var i = 0; i < this.blooms.length; i++) {
@@ -155,7 +157,7 @@ FlowerGarden.options = {
     rmin: 128, rmax: 255,
     gmin: 0,   gmax: 128,
     bmin: 0,   bmax: 128,
-    opacity: 0.2
+    opacity: 0.05
   },
   tanAngle: 60
 };
@@ -180,13 +182,10 @@ function randomrgba(rmin, rmax, gmin, gmax, bmin, bmax, a) {
   return rgba(r, g, b, a);
 }
 
-/****************************************************
- * 2) NOW THE MAIN CODE AFTER DEFINITIONS
- ****************************************************/
+// MAIN
+
 $(document).ready(function() {
-  /* =======================
-     A) Live Timer
-  ========================== */
+  // Live Timer
   var together = new Date("May 17, 2024 12:15:00");
   function updateTimer() {
     var now = new Date();
@@ -202,10 +201,8 @@ $(document).ready(function() {
   setInterval(updateTimer, 1000);
   updateTimer();
   
-  /* =======================
-     B) Floating Images (Fade Transition)
-  ========================== */
-  // Each key holds 5 image filenames in "images/" folder
+
+  // Each key holds 5 images
   let imagesMapping = {
     0: ["images/p (17).jpg", "images/p (4).jpg", "images/p (25).jpg", "images/p (11).jpg", "images/p (30).jpg"],
     1: ["images/p (9).jpg", "images/p (2).jpg", "images/p (22).jpg", "images/p (13).jpg", "images/p (19).jpg"],
@@ -216,10 +213,10 @@ $(document).ready(function() {
   };
 
 
-  // For each image, we’ll:
-//   - Assign a random cycle interval (e.g. 8-12 seconds)
-//   - Use a 2-second fade out, then 2-second fade in
-//   - Recursively schedule the next change
+  // For each image:
+  //   - Assign random cycle interval
+  //   - Add 2 second fade out & fade in
+  //   - Recursively schedule next change
 $('.floating-image').each(function() {
     var $img = $(this);
     var index = $img.data('index');
@@ -227,9 +224,9 @@ $('.floating-image').each(function() {
     
     $img.data('imgArray', imgArray);
     $img.data('currentIndex', 0);
-    $img.attr('src', imgArray[0]); // start with the first image
+    $img.attr('src', imgArray[0]);
   
-    // Random cycle time between 8s and 12s (8000-12000ms)
+    // Random cycle time between 3s and 12s
     var cycleTime = Math.floor(Math.random() * 9000) + 3000; 
     var fadeTime  = 2000; // 2 seconds fade
   
@@ -250,13 +247,10 @@ $('.floating-image').each(function() {
       }, cycleTime);
     }
   
-    // Start cycling
-    cycleImage();
+    cycleImage(); // Start cycling
   });
   
-  /* =======================
-     C) Flower Heart Animation
-  ========================== */
+  // Flower Heart Animation
   var $loveHeart = $("#loveHeart");
   var offsetX = $loveHeart.width() / 2;
   var offsetY = $loveHeart.height() / 2 - 55;
@@ -266,10 +260,9 @@ $('.floating-image').each(function() {
   flowerCanvas.width = $loveHeart.width();
   flowerCanvas.height = $loveHeart.height();
   var myGardenCtx = flowerCanvas.getContext("2d");
-  // "source-over" so petals appear properly
   myGardenCtx.globalCompositeOperation = "source-over";
   
-  // Our custom FlowerGarden instance
+  // FlowerGardaen instance
   var myGarden = new FlowerGarden(myGardenCtx, flowerCanvas);
   
   // Function to get a heart point for a given angle
