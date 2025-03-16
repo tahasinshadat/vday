@@ -182,142 +182,149 @@ function randomrgba(rmin, rmax, gmin, gmax, bmin, bmax, a) {
   return rgba(r, g, b, a);
 }
 
-// MAIN
 
-$(document).ready(function() {
-  // Live Timer
-  var together = new Date("May 17, 2024 12:15:00");
-  function updateTimer() {
-    var now = new Date();
-    var diff = now - together;
-    var seconds = Math.floor(diff / 1000) % 60;
-    var minutes = Math.floor(diff / (1000 * 60)) % 60;
-    var hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
-    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    $("#timer").text(
-      days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds"
-    );
-  }
-  setInterval(updateTimer, 1000);
-  updateTimer();
-  
+function initSite() {
 
-  // Each key holds 5 images
-  let imagesMapping = {
-    0: ["images/p (17).jpg", "images/p (4).jpg", "images/p (25).jpg", "images/p (11).jpg", "images/p (30).jpg"],
-    1: ["images/p (9).jpg", "images/p (2).jpg", "images/p (22).jpg", "images/p (13).jpg", "images/p (19).jpg"],
-    2: ["images/p (6).jpg", "images/p (27).jpg", "images/p (3).jpg", "images/p (14).jpg", "images/p (21).jpg"],
-    3: ["images/p (1).jpg", "images/p (26).jpg", "images/p (15).jpg", "images/p (8).jpg", "images/p (24).jpg"],
-    4: ["images/p (12).jpg", "images/p (10).jpg", "images/p (28).jpg", "images/p (5).jpg", "images/p (16).jpg"],
-    5: ["images/p (7).jpg", "images/p (29).jpg", "images/p (18).jpg", "images/p (23).jpg", "images/p (20).jpg"]
-  };
+  // Start Music
+  const audio = document.getElementById('bg-music');
+  audio.play().catch(err => console.log("Audio blocked:", err));
 
-
-  // For each image:
-  //   - Assign random cycle interval
-  //   - Add 2 second fade out & fade in
-  //   - Recursively schedule next change
-$('.floating-image').each(function() {
-    var $img = $(this);
-    var index = $img.data('index');
-    var imgArray = imagesMapping[index];
-    
-    $img.data('imgArray', imgArray);
-    $img.data('currentIndex', 0);
-    $img.attr('src', imgArray[0]);
-  
-    // Random cycle time between 3s and 12s
-    var cycleTime = Math.floor(Math.random() * 9000) + 3000; 
-    var fadeTime  = 2000; // 2 seconds fade
-  
-    // Recursive function to cycle each image
-    function cycleImage() {
-      setTimeout(function() {
-        var currentIndex = $img.data('currentIndex');
-        var nextIndex = (currentIndex + 1) % imgArray.length;
-        $img.data('currentIndex', nextIndex);
-  
-        // Fade out, switch image, then fade in
-        $img.fadeOut(fadeTime, function() {
-          $img.attr('src', imgArray[nextIndex]).fadeIn(fadeTime);
-        });
-        
-        // Schedule the next cycle
-        cycleImage();
-      }, cycleTime);
+  $(document).ready(function() {
+    // Live Timer
+    var together = new Date("May 17, 2024 12:15:00");
+    function updateTimer() {
+      var now = new Date();
+      var diff = now - together;
+      var seconds = Math.floor(diff / 1000) % 60;
+      var minutes = Math.floor(diff / (1000 * 60)) % 60;
+      var hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      $("#timer").text(
+        days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds"
+      );
     }
-  
-    cycleImage(); // Start cycling
-  });
-  
-  // Flower Heart Animation
-  var $loveHeart = $("#loveHeart");
-  var offsetX = $loveHeart.width() / 2;
-  var offsetY = $loveHeart.height() / 2 - 55;
-  
-  // Prepare canvas
-  var flowerCanvas = document.getElementById("flowerCanvas");
-  flowerCanvas.width = $loveHeart.width();
-  flowerCanvas.height = $loveHeart.height();
-  var myGardenCtx = flowerCanvas.getContext("2d");
-  myGardenCtx.globalCompositeOperation = "source-over";
-  
-  // FlowerGardaen instance
-  var myGarden = new FlowerGarden(myGardenCtx, flowerCanvas);
-  
-  // Function to get a heart point for a given angle
-  function getHeartPoint(angle) {
-    var t = angle / Math.PI;
-    var x = 19.5 * (16 * Math.pow(Math.sin(t), 3));
-    var y = -20 * (13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
-    return [offsetX + x, offsetY + y];
-  }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+    
 
-  // Start the heart animation after 3 seconds
-  function startHeartAnimation() {
-    var interval = 50;
-    var angle = 10;
-    var heartPoints = [];
-    var animationTimer = setInterval(function() {
-      var bloomPoint = getHeartPoint(angle);
-      var draw = true;
-      for (var i = 0; i < heartPoints.length; i++) {
-        var p = heartPoints[i];
-        var distance = Math.sqrt(
-          Math.pow(p[0] - bloomPoint[0], 2) + Math.pow(p[1] - bloomPoint[1], 2)
-        );
-        // Avoid overlapping blooms
-        if (distance < FlowerGarden.options.bloomRadius.max * 1.3) {
-          draw = false;
-          break;
-        }
+    // Each key holds 5 images
+    let imagesMapping = {
+      0: ["images/p (17).jpg", "images/p (4).jpg", "images/p (25).jpg", "images/p (11).jpg", "images/p (30).jpg"],
+      1: ["images/p (9).jpg", "images/p (2).jpg", "images/p (22).jpg", "images/p (13).jpg", "images/p (19).jpg"],
+      2: ["images/p (6).jpg", "images/p (27).jpg", "images/p (3).jpg", "images/p (14).jpg", "images/p (21).jpg"],
+      3: ["images/p (1).jpg", "images/p (26).jpg", "images/p (15).jpg", "images/p (8).jpg", "images/p (24).jpg"],
+      4: ["images/p (12).jpg", "images/p (10).jpg", "images/p (28).jpg", "images/p (5).jpg", "images/p (16).jpg"],
+      5: ["images/p (7).jpg", "images/p (29).jpg", "images/p (18).jpg", "images/p (23).jpg", "images/p (20).jpg"]
+    };
+
+
+    // For each image:
+    //   - Assign random cycle interval
+    //   - Add 2 second fade out & fade in
+    //   - Recursively schedule next change
+  $('.floating-image').each(function() {
+      var $img = $(this);
+      var index = $img.data('index');
+      var imgArray = imagesMapping[index];
+      
+      $img.data('imgArray', imgArray);
+      $img.data('currentIndex', 0);
+      $img.attr('src', imgArray[0]);
+    
+      // Random cycle time between 3s and 12s
+      var cycleTime = Math.floor(Math.random() * 9000) + 3000; 
+      var fadeTime  = 2000; // 2 seconds fade
+    
+      // Recursive function to cycle each image
+      function cycleImage() {
+        setTimeout(function() {
+          var currentIndex = $img.data('currentIndex');
+          var nextIndex = (currentIndex + 1) % imgArray.length;
+          $img.data('currentIndex', nextIndex);
+    
+          // Fade out, switch image, then fade in
+          $img.fadeOut(fadeTime, function() {
+            $img.attr('src', imgArray[nextIndex]).fadeIn(fadeTime);
+          });
+          
+          // Schedule the next cycle
+          cycleImage();
+        }, cycleTime);
       }
-      if (draw) {
-        heartPoints.push(bloomPoint);
-        myGarden.createRandomBloom(bloomPoint[0], bloomPoint[1]);
-      }
-      if (angle >= 30) {
-        clearInterval(animationTimer);
-      } else {
-        angle += 0.2;
-      }
-    }, interval);
-  }
-
-  // Trigger heart animation after 3 seconds
-  setTimeout(startHeartAnimation, 3000);
-
-  // Render loop for the FlowerGarden
-  setInterval(function() {
-    myGarden.render();
-  }, FlowerGarden.options.growSpeed);
-});
-
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const audio = document.getElementById('bg-music');
-    audio.play().catch(err => {
-      console.log("Autoplay was blocked:", err);
+    
+      cycleImage(); // Start cycling
     });
-  }, 10);
-});
+    
+    // Flower Heart Animation
+    var $loveHeart = $("#loveHeart");
+    var offsetX = $loveHeart.width() / 2;
+    var offsetY = $loveHeart.height() / 2 - 55;
+    
+    // Prepare canvas
+    var flowerCanvas = document.getElementById("flowerCanvas");
+    flowerCanvas.width = $loveHeart.width();
+    flowerCanvas.height = $loveHeart.height();
+    var myGardenCtx = flowerCanvas.getContext("2d");
+    myGardenCtx.globalCompositeOperation = "source-over";
+    
+    // FlowerGardaen instance
+    var myGarden = new FlowerGarden(myGardenCtx, flowerCanvas);
+    
+    // Function to get a heart point for a given angle
+    function getHeartPoint(angle) {
+      var t = angle / Math.PI;
+      var x = 19.5 * (16 * Math.pow(Math.sin(t), 3));
+      var y = -20 * (13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+      return [offsetX + x, offsetY + y];
+    }
+
+    // Start the heart animation after 3 seconds
+    function startHeartAnimation() {
+      var interval = 50;
+      var angle = 10;
+      var heartPoints = [];
+      var animationTimer = setInterval(function() {
+        var bloomPoint = getHeartPoint(angle);
+        var draw = true;
+        for (var i = 0; i < heartPoints.length; i++) {
+          var p = heartPoints[i];
+          var distance = Math.sqrt(
+            Math.pow(p[0] - bloomPoint[0], 2) + Math.pow(p[1] - bloomPoint[1], 2)
+          );
+          // Avoid overlapping blooms
+          if (distance < FlowerGarden.options.bloomRadius.max * 1.3) {
+            draw = false;
+            break;
+          }
+        }
+        if (draw) {
+          heartPoints.push(bloomPoint);
+          myGarden.createRandomBloom(bloomPoint[0], bloomPoint[1]);
+        }
+        if (angle >= 30) {
+          clearInterval(animationTimer);
+        } else {
+          angle += 0.2;
+        }
+      }, interval);
+    }
+
+    // Trigger heart animation after 3 seconds
+    setTimeout(startHeartAnimation, 3000);
+
+    // Render loop for the FlowerGarden
+    setInterval(function() {
+      myGarden.render();
+    }, FlowerGarden.options.growSpeed);
+  });
+
+}
+
+// window.addEventListener('load', () => {
+//   setTimeout(() => {
+//     const audio = document.getElementById('bg-music');
+//     audio.play().catch(err => {
+//       console.log("Autoplay was blocked:", err);
+//     });
+//   }, 10);
+// });

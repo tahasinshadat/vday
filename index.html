@@ -8,44 +8,105 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-  <!-- Background Music -->
-  <audio id="bg-music" loop>
-    <source src="audio/Tahasin-Blue-Piano.mp3" type="audio/mp3">
-    Your browser does not support audio.
-  </audio>
+
+  <div id="overlay">
+    <div id="envelopeOverlay">
+      <div class="wrapper">
+        <!-- Back of the envelope (dark blue) -->
+        <div class="back"></div>
   
-  <!-- Heart Animation -->
-  <div id="loveHeart">
-    <canvas id="flowerCanvas"></canvas>
-    <div id="timer"></div>
+        <!-- The letter sits behind the bottom portion -->
+        <div class="letter">
+          <br>
+          <p>To: Maliha Sara</p>
+          <p>❤️</p>
+          <p class="small-text">ꫛꫀꫛꪝꫀꫛꫛꫀꫛꫛꫀꪝꫛꫀꫛꪝꫀꫛꫛꫀꫀꫛꫀꪝꫛꫀꫛꫀꫛ</p>
+          <p class="small-text">ꫛꫀꫛꪝꫀꫛꫛꫀꫛꫛꫀꪝꫛꫀꫛꪝꫀꫛꫛꫀꫀꫛꫀꪝꫛꫀꫛꫀꫛ</p>
+          <p class="small-text">ꫛꫀꫛꪝꫀꫛꫛꫀꫛꫛꫀꪝꫛꫀꫛꪝꫀꫛꫛꫀꫀꫛꫀꪝꫛꫀꫛꫀꫛ</p>
+        </div>
+  
+        <!-- Bottom portion (two-tone triangles) -->
+        <div class="envelope"></div>
+  
+        <!-- Top flaps -->
+        <div class="lid one"></div>
+        <div class="lid two"></div>
+      </div>
+    </div>
   </div>
   
-  <!-- Letter -->
-  <div id="letterContainer">
-    <p>My love for you is akin to the expansion of the universe, never ending and exploratively infinite. You are the color that brings volume and enjoyment to life, and the meaning behind every movement I do, and every thought I think.</p>
+
+  <div id="contentWrapper" style="display: none;">
+
+    <!-- Valentines -->
+    <p id="valentineText">Be my Valentine?</p>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+      <source src="audio/Tahasin-Blue-Piano.mp3" type="audio/mp3">
+      Your browser does not support audio.
+    </audio>
     
-    <p>Your beauty makes my heart ring and your voice makes my mind calmer. My love for you doesn’t only exist in this lifetime, as it was present from the moment Allah (SWT) shaped me from the mud. My love for you extends beyond lifetimes and eternities, and is ever present to all.</p>
+    <!-- Heart Animation -->
+    <div id="loveHeart">
+      <canvas id="flowerCanvas"></canvas>
+      <div id="timer"></div>
+    </div>
     
-    <p>Your presence takes away all worries from my mind, and your touch cures all illness from my body. I loved you since before I knew you, and your love is the one thing I never knew I couldn’t go without, until I received it.</p>
+    <!-- Letter -->
+    <div id="letterContainer">
+      <p>My love for you is akin to the expansion of the universe, never ending and exploratively infinite. You are the color that brings volume and enjoyment to life, and the meaning behind every movement I do, and every thought I think.</p>
+      
+      <p>Your beauty makes my heart ring and your voice makes my mind calmer. My love for you doesn’t only exist in this lifetime, as it was present from the moment Allah (SWT) shaped me from the mud. My love for you extends beyond lifetimes and eternities, and is ever present to all.</p>
+      
+      <p>Your presence takes away all worries from my mind, and your touch cures all illness from my body. I loved you since before I knew you, and your love is the one thing I never knew I couldn’t go without, until I received it.</p>
+      
+      <p>My eyes are valuable not because of who they reside in, but because of what they reflect. They have the honor of holding the reflection of the most beautiful and loving person known. You are akin to the fruits of Heaven, which when enjoyed in this dunya, make everything else seem dull and unenjoyable.</p>
+      
+      <p>Without you, there is no going back, and no moving forward. I am always yours, in the life before, now, and after. And I irrefutably hold the greatest honor, to tell you, I’ll seek you out to take you for myself in every lifetime I live and every place I go. I am yours forever, and you are mine.</p>
+      
+      <p class="signature">- Your love forever, Tahasin</p>
+    </div>
     
-    <p>My eyes are valuable not because of who they reside in, but because of what they reflect. They have the honor of holding the reflection of the most beautiful and loving person known. You are akin to the fruits of Heaven, which when enjoyed in this dunya, make everything else seem dull and unenjoyable.</p>
+    <!-- Floating Images -->
+    <!-- Left Side -->
+    <img class="floating-image small circle" data-index="0" style="top: 5%; left: 5%;">
+    <img class="floating-image medium rounded" data-index="3" style="top: 35%; left: 1%;">
+    <img class="floating-image large circle" data-index="2" style="bottom: 6%; left: 3%;">
     
-    <p>Without you, there is no going back, and no moving forward. I am always yours, in the life before, now, and after. And I irrefutably hold the greatest honor, to tell you, I’ll seek you out to take you for myself in every lifetime I live and every place I go. I am yours forever, and you are mine.</p>
+    <!-- Right Side -->
+    <img class="floating-image large rounded" data-index="1" style="top: 15%; right: 5%;">
+    <img class="floating-image medium circle" data-index="4" style="top: 50%; right: 4%;">
+    <img class="floating-image small rounded" data-index="5" style="bottom: 5%; right: 10%;">
     
-    <p class="signature">- Your love forever, Tahasin</p>
   </div>
-  
-  <!-- Floating Images -->
-  <!-- Left Side -->
-  <img class="floating-image small circle" data-index="0" style="top: 5%; left: 5%;">
-  <img class="floating-image medium rounded" data-index="3" style="top: 35%; left: 1%;">
-  <img class="floating-image large circle" data-index="2" style="bottom: 6%; left: 3%;">
-  
-  <!-- Right Side -->
-  <img class="floating-image large rounded" data-index="1" style="top: 15%; right: 5%;">
-  <img class="floating-image medium circle" data-index="4" style="top: 50%; right: 4%;">
-  <img class="floating-image small rounded" data-index="5" style="bottom: 5%; right: 10%;">
-  
+
   <script src="script.js"></script>
+
+  <!-- small script to remove overlay on click -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const wrapper = document.querySelector("#envelopeOverlay .wrapper");
+      wrapper.addEventListener("click", function(e) {
+        e.stopPropagation();
+        // Animate envelope: scale up and fade out
+        wrapper.style.transform = "scale(3)";
+        wrapper.style.opacity = "0";
+  
+        // After animation, hide overlay & show main content
+        setTimeout(function() {
+          document.getElementById("overlay").style.display = "none";
+          const content = document.getElementById("contentWrapper");
+          content.style.display = "block";
+          // Force reflow, then fade in content
+          getComputedStyle(content).opacity;
+          content.style.opacity = 1;
+          initSite();
+        }, 500);
+      });
+    });
+  </script>
+  
+
 </body>
 </html>

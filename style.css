@@ -8,6 +8,25 @@ body {
   position: relative;
 }
 
+/* Fullscreen overlay that hides everything until user clicks */
+#overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #fceef5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: pointer;
+  text-align: center;
+}
+
+#contentWrapper {
+  display: none;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
 /* Heart Animation Container */
 #loveHeart {
   width: 670px;
@@ -107,4 +126,130 @@ body {
 
 .floating-image {
   animation: floatPulse 8s ease-in-out infinite;
+}
+
+/* Envelope Overlay Container */
+#envelopeOverlay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#envelopeOverlay * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#envelopeOverlay .wrapper {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  overflow: visible; /* prevent clipping of the letter */
+}
+
+#envelopeOverlay .back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 200px;
+  background-color: #3760C9;
+  z-index: 0;
+}
+
+#envelopeOverlay .letter {
+  position: absolute;
+  top: 35px;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  background-color: white;
+  border-radius: 10px;
+  z-index: 1; 
+  transition: 0.5s;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+#envelopeOverlay .letter p {
+  font-size: 25px;
+  color: #3B4049;
+}
+
+#envelopeOverlay .envelope {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-top: 100px solid transparent;
+  border-right: 150px solid #C4DFF0; /* Right half */
+  border-bottom: 100px solid #C4DFF0;
+  border-left: 150px solid #a4d4f2;   /* Left half */
+  z-index: 2;
+}
+
+#envelopeOverlay .lid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-right: 150px solid transparent;
+  border-bottom: 100px solid transparent;
+  border-left: 150px solid transparent;
+  transform-origin: top;
+  transition: transform 0.25s linear;
+  z-index: 1; 
+}
+
+/* Front-facing flap */
+#envelopeOverlay .lid.one {
+  border-top: 100px solid #3760C9;
+  transform: rotateX(0deg);
+  transition-delay: 0.75s;
+}
+
+/* Rear-facing flap */
+#envelopeOverlay .lid.two {
+  border-top: 100px solid #3760C9;
+  transform: rotateX(90deg);
+  transition-delay: 0.5s;
+}
+
+#envelopeOverlay .wrapper:hover .lid.one {
+  transform: rotateX(90deg);
+  transition-delay: 0s;
+}
+
+#envelopeOverlay .wrapper:hover .lid.two {
+  transform: rotateX(180deg);
+  transition-delay: 0.25s;
+}
+
+#envelopeOverlay .wrapper:hover .letter {
+  transform: translateY(-80px); /* Increase negative value to slide out more */
+  transition-delay: 0.5s;
+  z-index: 2; 
+}
+
+.small-text {
+  font-size: 10px !important;
+}
+
+#valentineText {
+  text-align: center;
+  font-family: "Dancing Script", cursive; /* or another cursive font */
+  font-size: 2rem;
+  color: #333; /* adjust as you like */
+  margin-top: 20px; /* optional spacing */
 }
