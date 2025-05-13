@@ -151,7 +151,7 @@ FlowerGarden.options = {
   petalStretch:  { min: 0.1, max: 3 },
   growFactor:    { min: 0.1, max: 1 },
   bloomRadius:   { min: 8,  max: 10 },
-  density:       10,
+  density:       15,
   growSpeed:     1000 / 60,
   color: {
     rmin: 128, rmax: 255,
@@ -193,19 +193,85 @@ function initSite() {
     // Live Timer
     var together = new Date("May 17, 2024 12:15:00");
     function updateTimer() {
-      var now = new Date();
-      var diff = now - together;
-      var seconds = Math.floor(diff / 1000) % 60;
-      var minutes = Math.floor(diff / (1000 * 60)) % 60;
-      var hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
-      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      $("#timer").text(
-        days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds"
-      );
+      const start = new Date("May 17, 2024 12:15:00");
+      const now   = new Date();
+      let diffSec = Math.floor((now - start) / 1000);
+
+      const dayS  = 86400, hrS = 3600, minS = 60;
+
+      const years = Math.floor(diffSec / (dayS * 365));
+      diffSec    -= years * dayS * 365;           // approx, fine for display
+      const days  = Math.floor(diffSec / dayS);
+      diffSec    -= days * dayS;
+      const hrs   = Math.floor(diffSec / hrS);
+      diffSec    -= hrs * hrS;
+      const mins  = Math.floor(diffSec / minS);
+      const secs  = diffSec - mins * minS;
+
+      /* label builder */
+      let out = "";
+      if (years > 0) {
+        out += `<span class="digit">${years}</span> ` +
+              (years === 1 ? "year " : "years ");
+      }
+      out += `<span class="digit">${days}</span> days ` +
+            `<span class="digit">${hrs.toString().padStart(2,"0")}</span> hours ` +
+            `<span class="digit">${mins.toString().padStart(2,"0")}</span> minutes ` +
+            `<span class="digit">${secs.toString().padStart(2,"0")}</span> seconds`;
+
+      document.getElementById("timer").innerHTML = out;
+  }
+  setInterval(updateTimer, 1000);
+  updateTimer();
+
+  /* ---------- dynamic greeting text ---------- */
+  function updateGreeting() {
+    const header = document.getElementById("valentineText");
+    const today = new Date();
+    const month = today.getMonth();   /* 0-based */
+    const day = today.getDate();
+
+    /* ❶ Valentine’s Day */
+    if (month === 1 && day === 14) {
+      header.textContent = "Be my Valentine?";
+      return;
     }
-    setInterval(updateTimer, 1000);
-    updateTimer();
-    
+
+    /* ❷ Birthday span 3 Aug – 16 Aug */
+    if (month === 7 && day >= 3 && day <= 16) {
+      header.textContent = "Happy Birthday Maliha!";
+      return;
+    }
+
+    /* helpers ------------------------------------------------ */
+    const start = new Date("May 17, 2024 12:15:00");
+    /* months since start, but “roll over” on the 17-th */
+    let monthsSince =
+        (today.getFullYear() - 2024) * 12 + (month - 4) - (day < 17 ? 1 : 0);
+    if (monthsSince < 0) monthsSince = 0;        // safety
+
+    const years = Math.floor(monthsSince / 12);
+
+    /* ❸ yearly window: 17 May – 16 Jun  (any year ≥1) */
+    const inYearWindow =
+        (month === 4 && day >= 17) || (month === 5 && day <= 16); // May==4, Jun==5
+    if (years >= 1 && inYearWindow) {
+      header.textContent = `Happy ${years} Year Anniversary!`;
+      return;
+    }
+
+    /* ❹ monthly window: from 17-th to next 16-th (excluding yearly window) */
+    const inMonthlyWindow = (day >= 17 || day <= 16);
+    if (inMonthlyWindow && monthsSince > 0) {
+      const m = monthsSince % 12 || 12;          // never 0
+      header.textContent = `Happy ${m} Month Anniversary!`;
+      return;
+    }
+
+    header.textContent = "Happy Anniversary";
+  }
+  updateGreeting();
+
 
     // Each key holds 5 images
     let imagesMapping = {
@@ -317,6 +383,33 @@ function initSite() {
       myGarden.render();
     }, FlowerGarden.options.growSpeed);
   });
+
+  /* ---------- cursor heart trail (random size / slight offset) ---------- */
+  let lastHeart = 0;
+  document.addEventListener("mousemove", e => {
+    const now = Date.now();
+    if (now - lastHeart < 40) return;   // throttle to ~25 fps
+    lastHeart = now;
+
+    const heart = document.createElement("div");
+    heart.className  = "cursor-heart";
+    heart.textContent = "💗";
+
+    /* random size 12 – 26 px */
+    const size = 12 + Math.random() * 14;
+    heart.style.fontSize = size + "px";
+    heart.style.opacity = 0.5 + Math.random() / 2;
+
+    /* small random offset around cursor (−15 … +15 px) */
+    const dx = (Math.random() - 0.5) * 30;
+    const dy = (Math.random() - 0.5) * 30;
+    heart.style.left = (e.clientX + dx) + "px";
+    heart.style.top  = (e.clientY + dy) + "px";
+
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1200);   // match animation duration
+  });
+
 
 }
 

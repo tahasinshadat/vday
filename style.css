@@ -250,6 +250,19 @@ body {
   text-align: center;
   font-family: "Dancing Script", cursive; /* or another cursive font */
   font-size: 2rem;
-  color: #333; /* adjust as you like */
-  margin-top: 20px; /* optional spacing */
+  color: #333; 
+  margin-top: 20px;
+}
+
+/* Hearts that follow the cursor */
+.cursor-heart {
+  position: fixed;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transform: translate(-50%,-50%) scale(0);
+  animation: heart-pop 1.2s ease-out forwards;
+}
+@keyframes heart-pop {
+  20%  { transform: translate(-50%,-80%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%,-150%) scale(1.6); opacity: 0; }
 }
